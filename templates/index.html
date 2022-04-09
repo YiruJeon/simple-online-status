@@ -1,0 +1,80 @@
+<html>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width" />
+
+  <style>
+    table {
+      border: 1px solid #000000;
+    }
+    th, td {
+      border: 1px solid #000000;
+    }
+  </style>
+
+
+   <body>
+      <h1> 현재 하시는 분들 </h1>
+      <table>
+        {% for key, value in status.items() %}
+          <tr>
+            <th>ID</th>
+            <th>NOTE</th>
+            <th>시작 시각</th>
+            <th>게임 진행 시간(분)</th>
+          </tr>
+          <tr>
+            <td> {{ key }} </td>
+            <td> {{ value[0] }} </td>
+            <td> {{ value[1] }} </td>
+            <td> {{ value[2] }} </td>
+          </tr>
+        {% endfor %}
+      </table>
+
+      <h1> 저 들어갑니다 </h1>
+      <form action = "join" method = "POST" enctype = "multipart/form-data">
+        제 ID는 {{ id }} 이고 <br><br>
+        <input type = "text" list="play-list" name = "playnote"> 할 것이며 <br><br>
+        <input type = "number" list="time-list" name = "end_time" style="width: 5em">분 후에 종료 예정
+        <input type = "submit">
+      </form>
+
+      <h1> 저 이제 나옵니다 </h1>
+      <form action = "exit" method = "POST" enctype = "multipart/form-data">
+        <input type = "submit">
+      </form>
+
+      <h1> ID 바꾸고 싶어요 </h1>
+      <form action = "setcookie" method = "POST" enctype = "multipart/form-data">
+        제 현재 ID는 {{ id }} 이고, <br><br>
+        새 ID는 <input type = "text" name = "id"> 입니다.
+        <input type = "submit">
+      </form>
+
+
+      <datalist id="play-list">
+        <option value="PAVLOVSCORE AP">
+        <option value="PAVLOVSCORE USA">
+        <option value="PAVLOVSCORE EU">
+        <option value="PAVLOVSCORE UNI">
+        <option value="공방 DM 하다가 상황에 맞게...">
+        <option value="공방 TDM 하다가 상황에 맞게...">
+      </datalist>
+
+      <datalist id="time-list">
+        <option value="10">
+        <option value="20">
+        <option value="30">
+        <option value="60">
+        <option value="90">
+        <option value="120">
+        <option value="180">
+      </datalist>
+
+      <datalist id="id-list">
+        {% for key, value in status.items() %}
+          <option value="{{ key }}">
+        {% endfor %}
+      </datalist>
+   </body>
+</html>
