@@ -15,22 +15,29 @@
 
   <body>
     <h1> 현재 하시는 분들 </h1>
-    <table>
-      <tr>
-        <th>ID</th>
-        <th>노트</th>
-        <th>시작 시각</th>
-        <th>예상 총 플레이타임(분)</th>
-      </tr>
-      {% for key, value in status.items() %}
+    {% if status|length == 0 %}
+      지금은 등록된 사람이 없네요.
+    {% else %}
+      <table>
         <tr>
-          <td> {{ key }} </td>
-          <td> {{ value[0] }} </td>
-          <td> {{ value[1] }} </td>
-          <td> {{ value[2] }} </td>
+          <th>ID</th>
+          <th>노트</th>
+          <th>시작 시각</th>
+          <th>플레이타임(분)</th>
         </tr>
-      {% endfor %}
-    </table>
+        {% for key, value in status.items() %}
+          <tr>
+            <td> {{ key }} </td>
+            <td> {{ value[0] }} </td>
+            <td> {{ value[1] }} </td>
+            <td> {{ value[2] }} </td>
+          </tr>
+        {% endfor %}
+      </table>
+      <br>
+      <b>파티를 원하시면 오큘러스 메시지 혹은 단톡방 태그 메시지를 보내보세요!</b>
+    {% endif %}
+
 
     <h1> 저 들어갑니다 </h1>
     <form action = "join" method = "POST" enctype = "multipart/form-data">
