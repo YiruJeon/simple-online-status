@@ -16,7 +16,10 @@ def join():
         id = request.cookies['id']
         playnote = request.form['playnote']
         now = datetime.datetime.now().astimezone(pytz.timezone('Asia/Seoul')).time().strftime("%H:%M:%S")
-        end_time = int(request.form['end_time'])
+        try:
+            end_time = int(request.form['end_time'])
+        except Exception as allException:
+            end_time = 0
         status[id] = (playnote, now, end_time)
     else:
         return "ERROR, 개발자에게 문의하세요"
@@ -42,9 +45,9 @@ def exit():
 def setcookie():
     id = request.form['id']
     resp = make_response(redirect(url_for('index')))
+    # id 길이가 0 인건 제외해버림
     if len(id) > 0:
       resp.set_cookie('id', id)
-      # id 길이가 0 인건 제외해버림
     return resp
 
 
@@ -57,5 +60,5 @@ def index():
 
 
 
-
-app.run(host="0.0.0.0", port=8080)
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=8080)

@@ -18,9 +18,9 @@
     <table>
       <tr>
         <th>ID</th>
-        <th>NOTE</th>
+        <th>노트</th>
         <th>시작 시각</th>
-        <th>게임 진행 시간(분)</th>
+        <th>예상 총 플레이타임(분)</th>
       </tr>
       {% for key, value in status.items() %}
         <tr>
@@ -36,7 +36,7 @@
     <form action = "join" method = "POST" enctype = "multipart/form-data">
       제 ID는 {{ id }} 이고 <br><br>
       <input type = "text" list="play-list" name = "playnote"> 할 것이며 <br><br>
-      <input type = "number" list="time-list" name = "end_time" style="width: 5em">분 후에 종료 예정
+      <input type = "number" list="time-list" name = "end_time" style="width: 5em">분 후에 종료 예정 (잘 모르겠으면 0)
       <input type = "submit">
     </form>
 
