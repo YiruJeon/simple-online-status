@@ -8,6 +8,24 @@ app = Flask(__name__)
 status = {}
 
 
+import logging
+logger = logging.getLogger(__file__)
+logger.setLevel(logging.DEBUG)
+# create file handler and set level to debug
+fileHandler = logging.FileHandler('access_log.txt')
+fileHandler.setLevel(logging.DEBUG)
+# create formatter
+formatter = logging.Formatter('[%(asctime)s][%(filename)s][%(levelname)s] %(message)s')
+# add formatter to fileHandler
+fileHandler.setFormatter(formatter)
+# add fileHandler to logger
+logger.addHandler(fileHandler)
+
+
+
+
+
+
 @app.route("/join", methods=["POST"])
 def join():
     if 'id' not in request.cookies:
@@ -21,6 +39,7 @@ def join():
         except Exception as allException:
             end_time = 0
         status[id] = (playnote, now, end_time)
+        logger.info(f'join, {id}, {now}')
     else:
         return "ERROR, 개발자에게 문의하세요"
 
@@ -35,6 +54,8 @@ def exit():
         if id not in status:
             return "ERROR, 쿠키 멋대로 바꾸셨나요? 개발자에게 문의하세요"
         del(status[id])
+        now = datetime.datetime.now().astimezone(pytz.timezone('Asia/Seoul')).time().strftime("%H:%M:%S")
+        logger.info(f'exit, {id}, {now}')
     else:
         return "ERROR, 개발자에게 문의하세요"
 
